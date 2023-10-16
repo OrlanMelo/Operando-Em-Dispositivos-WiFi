@@ -26,7 +26,7 @@ private:
 		}
 		else if (Res == ERROR_NOT_ENOUGH_MEMORY)
 		{
-			cout << "N„o foi possÌvel alocar a memÛria para o contexto do cliente.";
+			cout << "N√£o foi poss√≠vel alocar a mem√≥ria para o contexto do cliente.";
 		}
 
 		return bResult;
@@ -52,9 +52,13 @@ public:
 			cout << "Wi-Fi: " << Encontrados->Network[i].dot11Ssid.ucSSID << '\n';
 			cout << "Qualidade do sinal: " << Encontrados->Network[i].wlanSignalQuality << "% \n";
 			if (Encontrados->Network[i].bSecurityEnabled)
+			{
 				cout << "Conexao protegida.\n\n";
+			}
 			else
+			{
 				cout << "Conexao aberta.\n\n";
+			}
 		}
 	}
 
@@ -73,14 +77,14 @@ public:
 						wlan_intf_opcode_current_connection, 0, &DataSize, (PVOID*)&Atributos, 0);
 					if (Res == ERROR_SUCCESS)
 					{
-						cout << "Obtendo informaÁıes da conex„o atual...\n";
+						cout << "Obtendo informa√ß√µes da conex√£o atual...\n";
 						cout << "Nome da rede: " << Atributos->wlanAssociationAttributes.dot11Ssid.ucSSID << '\n';
-						cout << "LatÍncia de download: " << Atributos->wlanAssociationAttributes.ulRxRate << " KBps \n";
-						cout << "LatÍncia de upload: " << Atributos->wlanAssociationAttributes.ulTxRate << " KBps \n";
+						cout << "Lat√™ncia de download: " << Atributos->wlanAssociationAttributes.ulRxRate << " KBps \n";
+						cout << "Lat√™ncia de upload: " << Atributos->wlanAssociationAttributes.ulTxRate << " KBps \n";
 
-						cout << "Calculando as latÍncias para obtermos os valores em MBps\n";
+						cout << "Calculando as lat√™ncias para obtermos os valores em MBps\n";
 
-						//Dividimos a latÍncia de cada valor por 8.
+						//Dividimos a lat√™ncia de cada valor por 8.
 						int Divisor = 8;
 						long Download = (double)Atributos->wlanAssociationAttributes.ulRxRate / Divisor;
 						long Upload = (double)Atributos->wlanAssociationAttributes.ulTxRate / Divisor;
@@ -90,18 +94,26 @@ public:
 
 						cout << "Qualidade do sinal: " << Atributos->wlanAssociationAttributes.wlanSignalQuality << "% \n\n";
 
-						cout << "Analisando seguranÁa:\n";
+						cout << "Analisando seguran√ßa:\n";
 						if (Atributos->wlanSecurityAttributes.bSecurityEnabled)
-							cout << "Esta conex„o È segura.\n";
+						{
+							cout << "Esta conex√£o √© segura.\n";
+						}
 						else
-							cout << "Esta conex„o n„o È segura.\n";
+						{
+							cout << "Esta conex√£o n√£o √© segura.\n";
+						}
 
 						if (Atributos->wlanSecurityAttributes.bOneXEnabled)
-							cout << "O protocolo de seguranÁa IEEE 802.1X est· habilitado.\n";
+						{
+							cout << "O protocolo de seguran√ßa IEEE 802.1X est√° habilitado.\n";
+						}
 						else
-							cout << "O protocolo de seguranÁa IEEE 802.1X n„o est· habilitado.\n";
+						{
+							cout << "O protocolo de seguran√ßa IEEE 802.1X n√£o est√° habilitado.\n";
+						}
 
-						cout << "Verificando algoritmos de autenticaÁ„o de seguranÁa:\n\n";
+						cout << "Verificando algoritmos de autentica√ß√£o de seguran√ßa:\n\n";
 
 						switch (Atributos->wlanSecurityAttributes.dot11AuthAlgorithm)
 						{
@@ -115,7 +127,7 @@ public:
 							cout << "Algoritmo de Wi-Fi Protected Access ( WPA ), mais comum.";
 							break;
 						case DOT11_AUTH_ALGO_WPA_PSK:
-							cout << "Algoritmo de Wi-Fi Protected Access ( WPA ) prÈ-compartilhado.";
+							cout << "Algoritmo de Wi-Fi Protected Access ( WPA ) pr√©-compartilhado.";
 							break;
 						case DOT11_AUTH_ALGO_RSNA:
 							cout << "Algoritmo de Wi-Fi Robust Security Network Association (RSNA) 802.11i.";
@@ -124,13 +136,13 @@ public:
 							cout << "Algoritmo de Wi-Fi Robust Security Network Association (RSNA) 802.11i que usa PSK.";
 							break;
 						case DOT11_AUTH_ALGO_WPA3_SAE:
-							cout << "Algoritmo de autenticaÁ„o simultanea WPA3-SAE.";
+							cout << "Algoritmo de autentica√ß√£o simultanea WPA3-SAE.";
 							break;
 						case DOT11_AUTH_ALGO_WPA3_ENT:
-							cout << "Algoritmo de autenticaÁ„o WPA3-Enterprise.";
+							cout << "Algoritmo de autentica√ß√£o WPA3-Enterprise.";
 							break;
 
-							//VocÍ poder· colocar outros nesta cadeia.
+							//Voc√™ poder√° colocar outros nesta cadeia.
 
 						default:
 							//Outro.
@@ -141,25 +153,25 @@ public:
 					}
 					else
 					{
-						cout << "N„o foi possÌvel prosseguir com a solicitaÁ„o..\n" << GetLastError();
+						cout << "N√£o foi poss√≠vel prosseguir com a solicita√ß√£o..\n" << GetLastError();
 					}
 				}
 			}
 			else
 			{
-				cout << "N„o foi possÌvel enumerar interface de rede..\n";
+				cout << "N√£o foi poss√≠vel enumerar interface de rede..\n";
 			}
 		}
 	}
 
 	void DesconectarWiFi()
 	{
-		//Ir· desconectar usando o identificador atual obtido.
+		//Ir√° desconectar usando o identificador atual obtido.
 		WlanDisconnect(IdentificadorWLAN, &Lista->InterfaceInfo->InterfaceGuid, 0);
 
 		WlanFreeMemory(Lista);
 
-		//Iremos finalizar o identificador, pois n„o ser· mais necess·rio.
+		//Iremos finalizar o identificador, pois n√£o ser√° mais necess√°rio.
 		WlanCloseHandle(IdentificadorWLAN, 0);
 	}
 
@@ -168,7 +180,7 @@ public:
 int main()
 {
 
-	cout << "O assistente est· executando pesquisas e operaÁıes para dispositivos Wi-Fi...";
+	cout << "O assistente est√° executando pesquisas e opera√ß√µes para dispositivos Wi-Fi...";
 
 	Funcoes.ObtendoInformacoesDeInterface();
 	Funcoes.PesquisarRedesDisponiveis();
