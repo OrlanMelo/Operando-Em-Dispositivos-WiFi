@@ -86,8 +86,8 @@ public:
 
 						//Dividimos a latência de cada valor por 8.
 						int Divisor = 8;
-						long Download = (double)Atributos->wlanAssociationAttributes.ulRxRate / Divisor;
-						long Upload = (double)Atributos->wlanAssociationAttributes.ulTxRate / Divisor;
+						ULONG Download = (double)Atributos->wlanAssociationAttributes.ulRxRate / Divisor;
+						ULONG Upload = (double)Atributos->wlanAssociationAttributes.ulTxRate / Divisor;
 
 						cout << "Velocidade de download: " << Download << " MBps\n";
 						cout << "Velocidade de upload: " << Upload << " MBps\n";
